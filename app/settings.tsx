@@ -1,19 +1,19 @@
-// screens/HomeScreen.tsx
+// app/settings.tsx
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '../ThemeContext';
 
-const HomeScreen: React.FC<{ onNavigate: (screen: 'Home' | 'Settings' | 'Game') => void }> = ({ onNavigate }) => {
-  const { theme } = useTheme();
+const Settings: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-      <Text style={[styles.title, { color: theme.textColor }]}>TIC TAC TITAN</Text>
-      <TouchableOpacity style={[styles.button, { backgroundColor: theme.buttonColor }]} onPress={() => onNavigate('Game')}>
-        <Text style={[styles.buttonText, { color: theme.buttonTextColor }]}>SMASH IT</Text>
+      <Text style={[styles.title, { color: theme.textColor }]}>Settings Page</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: theme.buttonColor }]} onPress={toggleTheme}>
+        <Text style={[styles.buttonText, { color: theme.buttonTextColor }]}>Toggle Theme</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, { backgroundColor: theme.buttonColor }]} onPress={() => onNavigate('Settings')}>
-        <Text style={[styles.buttonText, { color: theme.buttonTextColor }]}>SETTINGS</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: theme.buttonColor }]} onPress={() => navigation.goBack()}>
+        <Text style={[styles.buttonText, { color: theme.buttonTextColor }]}>Go Back</Text>
       </TouchableOpacity>
     </View>
   );
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Settings;

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Modal } from 'react-native';
 import GameBoard from '../components/GameBoard';
+import { useTheme } from '@/ThemeContext';
 
 const GameBoardScreen: React.FC<{ onGoHome: () => void }> = ({ onGoHome }) => {
+  const { theme } = useTheme();
   const [score, setScore] = useState({ player1: 0, player2: 0 });
   const [currentPlayer, setCurrentPlayer] = useState<'P1' | 'P2'>('P1');
   const [status, setStatus] = useState<'MOVING' | 'WINNING'>('MOVING');
@@ -61,32 +63,32 @@ const GameBoardScreen: React.FC<{ onGoHome: () => void }> = ({ onGoHome }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       <View style={styles.header}>
-        <Text style={styles.playerText}>P1</Text>
+        <Text style={[styles.playerText, { color: theme.textColor }]}>P1</Text>
         <View style={styles.vsContainer}>
           <Text style={styles.vsText}>X</Text>
           <Text style={styles.vsText}>VS</Text>
           <Text style={styles.vsText}>O</Text>
         </View>
-        <Text style={styles.playerText}>P2</Text>
+        <Text style={[styles.playerText, { color: theme.textColor }]}>P2</Text>
       </View>
-      <Text style={styles.statusText}>
+      <Text style={[styles.statusText, { color: theme.textColor }]}>
         {gameOver ? (winner === 'DRAW' ? "It's a Draw!" : `${winner} Wins!`) : `${currentPlayer === 'P1' ? 'Player 1' : 'Player 2'}'s Turn`}
       </Text>
       <GameBoard board={board} onCellPress={handleCellPress} />
       <View style={styles.footer}>
-        <Text style={styles.scoreLabel}>P1</Text>
-        <Text style={styles.scoreText}>{score.player1}</Text>
-        <Text style={styles.scoreText}> - </Text>
-        <Text style={styles.scoreText}>{score.player2}</Text>
-        <Text style={styles.scoreLabel}>P2</Text>
+        <Text style={[styles.scoreLabel, { color: theme.buttonColor }]}>P1</Text>
+        <Text style={[styles.scoreText, { color: theme.buttonColor }]}>{score.player1}</Text>
+        <Text style={[styles.scoreText, { color: theme.buttonColor }]}> - </Text>
+        <Text style={[styles.scoreText, { color: theme.buttonColor }]}>{score.player2}</Text>
+        <Text style={[styles.scoreLabel, { color: theme.buttonColor }]}>P2</Text>
       </View>
-      <TouchableOpacity style={styles.goHomeButton} onPress={onGoHome}>
-        <Text style={styles.goHomeButtonText}>GO HOME</Text>
+      <TouchableOpacity style={[styles.goHomeButton, { backgroundColor: theme.buttonColor }]} onPress={onGoHome}>
+        <Text style={[styles.goHomeButtonText, { color: theme.buttonTextColor }]}>GO HOME</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.restartButton} onPress={handleRestart}>
-        <Text style={styles.restartButtonText}>RESTART</Text>
+      <TouchableOpacity style={[styles.restartButton, { backgroundColor: theme.buttonColor }]} onPress={handleRestart}>
+        <Text style={[styles.restartButtonText, { color: theme.buttonTextColor }]}>RESTART</Text>
       </TouchableOpacity>
       {gameOver && (
         <Modal
@@ -158,7 +160,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e0e0e0',
     padding: 20,
   },
   header: {
@@ -179,7 +180,6 @@ const styles = StyleSheet.create({
   playerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
   },
   vsText: {
     fontSize: 28,
@@ -191,7 +191,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#333',
   },
   footer: {
     flexDirection: 'row',
@@ -203,34 +202,28 @@ const styles = StyleSheet.create({
   scoreLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#4A90E2',
     marginHorizontal: 10,
   },
   scoreText: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#4A90E2',
   },
   restartButton: {
-    backgroundColor: '#FF6347',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     marginTop: 20,
   },
   restartButtonText: {
-    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
   },
   goHomeButton: {
-    backgroundColor: '#4A90E2',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   goHomeButtonText: {
-    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -253,14 +246,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalButton: {
-    backgroundColor: '#4A90E2',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     marginVertical: 10,
   },
   modalButtonText: {
-    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
   },
